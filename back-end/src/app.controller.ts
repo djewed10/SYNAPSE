@@ -1,5 +1,5 @@
-import { Controller, Get } from "@nestjs/common";
-import type { AppService } from "./app.service";
+import { Controller, Get } from "@nestjs/common"
+import { AppService } from "./app.service"
 
 @Controller()
 export class AppController {
@@ -7,6 +7,7 @@ export class AppController {
 
 	@Get()
 	getHello(): any {
-		return this.appService.test();
+		console.log('url in controller: '+ process.env.DATABASE_URL)
+		return this.appService.test()
 	}
 }

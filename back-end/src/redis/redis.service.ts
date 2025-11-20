@@ -1,7 +1,11 @@
-// src/redis/redis.service.ts
-import Redis from "ioredis";
+import { Inject, Injectable } from '@nestjs/common';
+import type { Redis } from 'ioredis';
 
-export const redis = new Redis({
-	host: "localhost",
-	port: 6379,
-});
+@Injectable()
+export class RedisService {
+   constructor(@Inject("REDIS") private  redis: Redis) {}
+     async test() {
+    await this.redis.set('name', 'mounir');
+    return await this.redis.get('name'); // mounir
+  }
+}
