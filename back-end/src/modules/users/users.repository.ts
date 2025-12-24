@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { eq, sql } from 'drizzle-orm';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import * as schema from '../../../database/schema';
 import { DATABASE_CONNECTION } from '../../database/database-connection';
+import * as schema from '../../database/schema';
 
 @Injectable()
 export class UsersRepository {
   constructor(
     @Inject(DATABASE_CONNECTION) 
-    private readonly _db: NodePgDatabase<typeof schema>,
+    private readonly db: NodePgDatabase<typeof schema>,
   ) {}
 
   async create(userData: typeof schema.users.$inferInsert) {
