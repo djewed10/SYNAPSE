@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { and, eq, sql } from 'drizzle-orm';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
-import * as schema from '../../../database/schema';
+import * as schema from '../../database/schema';
 import type { FilterQcmsDto } from './dto/filter-qcms.dto';
 
 @Injectable()
@@ -54,6 +54,10 @@ export class QcmsRepository {
   async delete(id: string) {
     await this.db.delete(schema.qcms).where(eq(schema.qcms.id, id));
   }
+
+
+
+
 
   async count(lessonId?: string) {
     const where = lessonId ? eq(schema.qcms.lessonId, lessonId) : undefined;
