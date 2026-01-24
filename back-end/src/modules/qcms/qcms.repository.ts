@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq, sql, type SQL } from 'drizzle-orm';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import { DATABASE_CONNECTION } from 'src/database/database-connection';
 import * as schema from '../../database/schema';
 import type { FilterQcmsDto } from './dto/filter-qcms.dto';
 
@@ -8,7 +9,7 @@ import type { FilterQcmsDto } from './dto/filter-qcms.dto';
 export class QcmsRepository {
   constructor(
     @Inject(DATABASE_CONNECTION)
-    private readonly _db: NodePgDatabase<typeof schema>,
+    private readonly db: NodePgDatabase<typeof schema>,
   ) {}
 
   async create(data: typeof schema.qcms.$inferInsert) {
@@ -27,7 +28,7 @@ export class QcmsRepository {
 
   async findAll(filterDto: FilterQcmsDto) {
     const { lessonId, source, isApproved } = filterDto;
-    const conditions = [];
+    const conditions: SQL[] = [];
 
     if (lessonId) conditions.push(eq(schema.qcms.lessonId, lessonId));
     if (source) conditions.push(eq(schema.qcms.source, source));

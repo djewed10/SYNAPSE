@@ -8,7 +8,7 @@ import * as schema from '../../database/schema';
 export class GamificationRepository {
   constructor(
     @Inject(DATABASE_CONNECTION)
-    private readonly _db: NodePgDatabase<typeof schema>,
+    private readonly db: NodePgDatabase<typeof schema>,
   ) {}
 
   async upsertDailyPoints(

@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common"
-import { DatabaseModule } from "../../database/database.module"
 import { ActivationCodesController } from "./activation-codes.controller"
 import { ActivationCodesRepository } from "./activation-codes.repository"
 import { ActivationCodesService } from "./activation-codes.service"
+import { DatabaseModule } from "src/database/database.module"
 
 @Module({
 	imports: [DatabaseModule],
