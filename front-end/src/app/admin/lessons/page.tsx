@@ -1,0 +1,1 @@
+export default function Page() {\n  return <div>Manage Lessons</div>;\n}\n

@@ -1,0 +1,3 @@
+// Auth components export
+export { LoginForm } from './LoginForm';
+export { RegisterForm } from './RegisterForm';

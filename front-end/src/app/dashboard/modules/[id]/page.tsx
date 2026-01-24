@@ -1,0 +1,1 @@
+export default function Page() {\n  return <div>Module Details</div>;\n}\n

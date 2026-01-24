@@ -1,0 +1,1 @@
+export default function Page() {\n  return <div>Volet Details</div>;\n}\n

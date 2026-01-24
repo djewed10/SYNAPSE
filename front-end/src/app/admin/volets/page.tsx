@@ -1,0 +1,1 @@
+export default function Page() {\n  return <div>Manage Volets</div>;\n}\n
