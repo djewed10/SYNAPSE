@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useTheme } from '@/contexts/theme-context';
@@ -11,11 +11,14 @@ import { useTheme } from '@/contexts/theme-context';
 const navItems = [
   { label: 'Accueil', href: '/' },
   { label: 'Dashboard', href: '/dashboard' },
-  { label: 'Modules', href: '/modules' },
-  { label: 'Lessons', href: '/lessons' },
-  { label: 'QCM', href: '/qcms' },
-  { label: 'Playlists', href: '/playlists' },
-  { label: 'Statistiques', href: '/statistics' },
+  { label: 'Modules', href: '/dashboard/modules' },
+  { label: 'Examen', href: '/dashboard/examen' },
+  { label: 'Hack', href: '/dashboard/hack' },
+  { label: 'Bibliotheque', href: '/dashboard/bibliotheque' },
+  { label: 'Résumé QCM', href: '/dashboard/resume-qcm' },
+  { label: 'Statistiques', href: '/dashboard/statistiques' },
+  { label: 'Dernierevu', href: '/dashboard/dernierevu' },
+  { label: 'Playlists', href: '/dashboard/playlists' },
 ];
 
 // Constants for drawer behavior
@@ -52,7 +55,7 @@ export function Header() {
     isOpenRef.current = isOpen;
   }, [isOpen]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsMounted(true);
   }, []);
 
@@ -216,7 +219,6 @@ export function Header() {
   useEffect(() => {
     if (!isDragging) {
       applyTransform(isOpen ? DRAWER_WIDTH : 0, true);
-      setDragX(isOpen ? DRAWER_WIDTH : 0);
     }
   }, [isOpen, isDragging, applyTransform]);
 
@@ -235,36 +237,28 @@ export function Header() {
     {
       key: 'modules',
       type: 'link',
-      href: '/modules',
+      href: '/dashboard/modules',
       label: 'Modules',
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M7 7l5-3 5 3-5 3-5-3Zm0 5l5 3 5-3M7 12v5l5 3 5-3v-5" />
-        </svg>
+        <Image src="/headers-pc-icons/qcm-checkbox.png" alt="Modules" width={16} height={16} className="h-4 w-4 object-contain" />
       ),
     },
     {
-      key: 'qcm',
+      key: 'examen',
       type: 'link',
-      href: '/qcms',
-      label: 'QCM',
+      href: '/dashboard/examen',
+      label: 'Examens',
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2" />
-          <circle cx="12" cy="12" r="9" />
-        </svg>
+        <Image src="/headers-pc-icons/chronometer-watch-5-second-svgrepo-com.png" alt="QCM" width={16} height={16} className="h-4 w-4 object-contain" />
       ),
     },
     {
       key: 'lessons',
       type: 'link',
-      href: '/lessons',
+      href: '/dashboard/lessons',
       label: 'Lessons',
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 5h9a3 3 0 0 1 3 3v11H7a3 3 0 0 0-3 3V5Z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M16 5h4v16a2 2 0 0 1-2 2H7" />
-        </svg>
+        <Image src="/headers-pc-icons/books-study-learning-education-reading-library-svgrepo-com.png" alt="Lessons" width={16} height={16} className="h-4 w-4 object-contain" />
       ),
     },
     {
@@ -273,20 +267,16 @@ export function Header() {
       label: 'Back',
       onClick: () => window.history.back(),
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 5 8 12l7 7" />
-        </svg>
+        <Image src="/headers-pc-icons/arrow-sm-down-svgrepo-com.png" alt="Back" width={16} height={16} className="h-4 w-4 object-contain rotate-180" />
       ),
     },
     {
       key: 'home',
       type: 'link',
-      href: '/',
+      href: '/dashboard',
       label: 'Accueil',
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-8.5Z" />
-        </svg>
+        <Image src="/headers-pc-icons/home-svgrepo-com.png" alt="Home" width={16} height={16} className="h-4 w-4 object-contain" />
       ),
     },
     {
@@ -295,57 +285,75 @@ export function Header() {
       label: 'Forward',
       onClick: () => window.history.forward(),
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="m9 5 7 7-7 7" />
-        </svg>
+        <Image src="/headers-pc-icons/arrow-sm-down-svgrepo-com.png" alt="Forward" width={16} height={16} className="h-4 w-4 object-contain " />
       ),
     },
     {
       key: 'playlists',
       type: 'link',
-      href: '/playlists',
+      href: '/dashboard/playlists',
       label: 'Playlists',
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h12M6 12h12M6 18h7" />
-        </svg>
+        <Image src="/headers-pc-icons/svg-path.png" alt="Playlists" width={16} height={16} className="h-3 w-3 object-contain" />
       ),
     },
     {
-      key: 'bookmarks',
+      key: 'hack',
       type: 'link',
-      href: '/qcms',
-      label: 'Favoris',
+      href: '/dashboard/hack',
+      label: 'Mode Hack',
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1Z" />
-        </svg>
+        <Image src="/headers-pc-icons/thunder-svgrepo-com.png" alt="Favoris" width={16} height={16} className="h-4 w-4 object-contain" />
       ),
     },
     {
       key: 'stats',
       type: 'link',
-      href: '/statistics',
+      href: '/dashboard/statistiques',
       label: 'Statistiques',
       icon: (
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3a9 9 0 1 0 9 9h-9V3Z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v9h9" />
-        </svg>
+        <Image src="/headers-pc-icons/statistics-svgrepo-com.png" alt="Stats" width={16} height={16} className="h-4 w-4 object-contain" />
+      ),
+    },
+    {
+      key: 'bibliotheque',
+      type: 'link',
+      href: '/dashboard/bibliotheque',
+      label: 'Bibliothèque',
+      icon: (
+        <Image src="/headers-pc-icons/books-study-learning-education-reading-library-svgrepo-com.png" alt="Bibliotheque" width={16} height={16} className="h-4 w-4 object-contain" />
+      ),
+    },
+    {
+      key: 'resume-qcm',
+      type: 'link',
+      href: '/dashboard/resume-qcm',
+      label: 'Résumé QCM',
+      icon: (
+        <Image src="/icons/resumer-qcm-logo.png" alt="Resume QCM" width={16} height={16} className="h-4 w-4 object-contain" />
+      ),
+    },
+    {
+      key: 'dernierevu',
+      type: 'link',
+      href: '/dashboard/dernierevu',
+      label: 'Dernierevu',
+      icon: (
+        <Image src="/icons/eye_icon.png" alt="Dernierevu" width={16} height={16} className="h-4 w-4 object-contain" />
       ),
     },
   ] as const;
 
   return (
-    <header className=" top-0 z-30 border-b   bg-[var(--background)] transition-colors duration-300">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[#3b4df8] via-[#6c79ff] to-transparent opacity-50" />
-      <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8 py-4">
+    <header className="top-0 z-30 bg-[var(--background)] transition-colors duration-300">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-[var(--primary)] via-[var(--accent-purple)] to-transparent opacity-50" />
+      <div className="relative mx-auto flex items-center justify-between gap-3 px-4 sm:px-6 lg:px-8 py-4">
         {/* Brand + menu */}
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={openDrawer}
-            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-[#3b4df8] shadow-sm transition hover:shadow-md active:scale-95"
+            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--primary)] shadow-sm transition hover:shadow-md active:scale-95"
             aria-label="Open menu"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -353,7 +361,7 @@ export function Header() {
             </svg>
           </button>
 
-            <Link href="/" className="flex items-center gap-2 text-[#2b35b3] dark:text-blue-400">
+            <Link href="/" className="flex items-center gap-2 text-[var(--primary)]">
             <Image 
               src="/icons/Synapse S only.png" 
               alt="Synapse" 
@@ -372,76 +380,93 @@ export function Header() {
         </div>
 
         {/* Desktop pill navigation */}
-        <nav className="hidden lg:flex items-center gap-2 rounded-full bg-[#3b4df8] px-4 py-2 shadow-lg shadow-blue-300/40">
+        <nav className="hidden lg:flex items-center gap-2 rounded-full bg-[var(--primary)] px-4 py-2 shadow-lg">
           {quickActions.map((item) => {
             if (item.type === 'link') {
               const active = isActive(item.href);
               return (
-                <Link
-                  key={item.key}
-                  href={item.href}
-                  className={`flex h-9 w-9 items-center justify-center rounded-full text-white transition ${
-                    active ? 'bg-white/20' : 'hover:bg-white/15'
-                  }`}
-                  aria-label={item.label}
-                >
-                  {item.icon}
-                </Link>
+                <div key={item.key} className="relative group">
+                  <Link
+                    href={item.href}
+                    className={`flex h-9 w-9 items-center justify-center rounded-full text-white transition ${
+                      active ? 'bg-white/20' : 'hover:bg-white/15'
+                    }`}
+                    aria-label={item.label}
+                  >
+                    {item.icon}
+                  </Link>
+                  <span className="absolute left-1/2 -translate-x-1/2 top-full mt-3 px-3 py-1.5 text-xs font-medium  bg-[var(--surface-elevated)] text-[var(--text-primary)] rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out transform group-hover:translate-y-0 translate-y-1 pointer-events-none z-50 shadow-lg border border-[var(--border)]">
+                    {item.label}
+                    <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--surface-elevated)] rotate-45 border-l border-t border-[var(--border)]" />
+                  </span>
+                </div>
               );
             }
 
             return (
-              <button
-                key={item.key}
-                type="button"
-                onClick={item.onClick}
-                className="flex h-9 w-9 items-center justify-center rounded-full text-white transition hover:bg-white/15"
-                aria-label={item.label}
-              >
-                {item.icon}
-              </button>
+              <div key={item.key} className="relative group">
+                <button
+                  type="button"
+                  onClick={item.onClick}
+                  className="flex h-9 w-9 items-center justify-center rounded-full text-white transition hover:bg-white/15"
+                  aria-label={item.label}
+                >
+                  {item.icon}
+                </button>
+                <span className="absolute left-1/2 -translate-x-1/2 top-full mt-3 px-3 py-1.5 text-xs font-medium bg-[var(--surface-elevated)] text-[var(--text-primary)] rounded-lg whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-out transform group-hover:translate-y-0 translate-y-1 pointer-events-none z-50 shadow-lg border border-[var(--border)]">
+                  {item.label}
+                  <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--surface-elevated)] rotate-45 border-l border-t border-[var(--border)]" />
+                </span>
+              </div>
             );
           })}
         </nav>
 
         {/* Actions */}
         <div className="flex mr-[-40px] items-center ">
-          <button
-            onClick={toggleTheme}
-            className="relative mr-[-10px] inline-flex h-6 w-14 items-center rounded-full bg-[#3b4df8] px-1 shadow-sm shadow-blue-200/70 dark:shadow-blue-900/50 transition-all duration-300 hover:shadow-md active:scale-95"
-            aria-label="Toggle theme"
-            type="button"
-          >
-            {/* Sun Icon */}
-            <span className={`absolute left-1.5 text-white transition-all duration-300 ${
-              theme === 'dark' ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
-            }`}>
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
-                <circle cx="12" cy="12" r="3" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2M12 19v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M3 12h2M19 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-              </svg>
+          <div className="relative group">
+            <button
+              onClick={toggleTheme}
+              className="relative mr-[-10px] inline-flex h-6 w-14 items-center rounded-full bg-[var(--primary)] px-1 shadow-sm transition-all duration-300 hover:shadow-md active:scale-95"
+              aria-label="Toggle theme"
+              type="button"
+            >
+              {/* Sun Icon */}
+              <span className={`absolute left-1.5 text-white transition-all duration-300 ${
+                theme === 'dark' ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+              }`}>
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <circle cx="12" cy="12" r="3" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2M12 19v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M3 12h2M19 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                </svg>
+              </span>
+              {/* Moon Icon */}
+              <span className={`absolute right-1.5 text-white transition-all duration-300 ${
+                theme === 'dark' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+              }`}>
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+              </span>
+              {/* Toggle Circle */}
+              <span className={`h-5 w-5 rounded-full bg-white shadow-md transition-all duration-1000 ease-in-out ${
+                theme === 'dark' ? 'translate-x-7' : 'translate-x-0'
+              }`} />
+            </button>
+            {/* Tooltip */}
+            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-2 px-2 py-1 text-xs font-medium bg-[var(--surface-elevated)] text-[var(--text-primary)] border border-[var(--border)] rounded-md whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none z-50">
+              {theme === 'dark' ? 'Mode clair' : 'Mode sombre'}
+              <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[var(--surface-elevated)] border-l border-t border-[var(--border)] rotate-45" />
             </span>
-            {/* Moon Icon */}
-            <span className={`absolute right-1.5 text-white transition-all duration-300 ${
-              theme === 'dark' ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
-            }`}>
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-              </svg>
-            </span>
-            {/* Toggle Circle */}
-            <span className={`h-5 w-5 rounded-full bg-white shadow-md transition-all duration-1000 ease-in-out ${
-              theme === 'dark' ? 'translate-x-7' : 'translate-x-0'
-            }`} />
-          </button>
+          </div>
 
           {isAuthenticated && user ? (
             <button
               onClick={logout}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#3b4df8]/20 dark:border-blue-500/30 bg-white dark:bg-gray-800 shadow-sm transition-colors duration-300"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] shadow-sm transition-colors duration-300"
               aria-label="Profile"
             >
-              <span className="h-10 w-10 rounded-full bg-gradient-to-br from-slate-700 to-slate-900" />
+              <span className="h-10 w-10 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--accent-purple)]" />
             </button>
           ) : (
             <Link
@@ -453,11 +478,8 @@ export function Header() {
               alt="Synapse" 
               width={80} 
               height={80} 
-              className="  w-[110px]
-              " 
+              className="w-[110px]" 
             />
-           
-           
             </Link>
           )}
         </div>
@@ -484,7 +506,7 @@ export function Header() {
               {/* Drawer Panel */}
               <div
                 ref={drawerRef}
-                className="fixed inset-y-0 left-0 h-screen bg-white dark:bg-gray-900 shadow-2xl overflow-y-auto"
+                className="fixed inset-y-0 left-0 h-screen bg-[var(--background)] dark:bg-[var(--drawer-bg)] border-r border-[var(--drawer-border)] shadow-2xl overflow-y-auto"
                 style={{
                   width: DRAWER_WIDTH,
                   maxWidth: '85vw',
@@ -495,7 +517,7 @@ export function Header() {
                 <div className="flex flex-col h-full px-6 py-6">
                   {/* Header */}
                   <div className="flex items-center justify-between shrink-0">
-                    <Link href="/" onClick={closeDrawer} className="flex items-center gap-2 text-[#2b35b3] dark:text-blue-400">
+                    <Link href="/" onClick={closeDrawer} className="flex items-center gap-2 text-[var(--primary)]">
                       <Image 
                         src="/icons/Synapse Full logo.png" 
                         alt="Synapse" 
@@ -507,7 +529,7 @@ export function Header() {
                     <button
                       type="button"
                       onClick={closeDrawer}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-gray-700 text-slate-500 dark:text-gray-400 transition-colors duration-200 hover:bg-slate-100 dark:hover:bg-gray-800 active:scale-95"
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-secondary)] transition-colors duration-200 hover:bg-[var(--surface-hover)] active:scale-95"
                       aria-label="Close menu"
                     >
                       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -525,8 +547,8 @@ export function Header() {
                         onClick={closeDrawer}
                         className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-colors duration-200 ${
                           isActive(item.href)
-                            ? 'bg-[#3b4df8] text-white shadow-md shadow-blue-200/60'
-                            : 'text-slate-600 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800'
+                            ? 'bg-[var(--primary)] text-white shadow-md'
+                            : 'text-[var(--text-secondary)] hover:bg-[var(--surface-hover)]'
                         }`}
                       >
                         <span>{item.label}</span>
@@ -538,14 +560,14 @@ export function Header() {
                   </nav>
 
                   {/* Footer Actions */}
-                  <div className="shrink-0 pt-6 pb-4 border-t border-slate-200 dark:border-gray-700 mt-auto">
+                  <div className="shrink-0 pt-6 pb-4 border-t border-[var(--border)] mt-auto">
                     {isAuthenticated && user ? (
                       <button
                         onClick={() => {
                           logout();
                           closeDrawer();
                         }}
-                        className="w-full rounded-full border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-sm font-semibold text-slate-600 dark:text-gray-300 transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-gray-700 active:scale-[0.98]"
+                        className="w-full rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm font-semibold text-[var(--text-secondary)] transition-colors duration-200 hover:bg-[var(--surface-hover)] active:scale-[0.98]"
                       >
                         Déconnexion
                       </button>
@@ -554,14 +576,14 @@ export function Header() {
                         <Link
                           href="/auth/login"
                           onClick={closeDrawer}
-                          className="flex-1 rounded-full border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-slate-600 dark:text-gray-300 transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-gray-700"
+                          className="flex-1 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-center text-sm font-semibold text-[var(--text-secondary)] transition-colors duration-200 hover:bg-[var(--surface-hover)]"
                         >
                           Connexion
                         </Link>
                         <Link
                           href="/auth/register"
                           onClick={closeDrawer}
-                          className="flex-1 rounded-full bg-[#3b4df8] px-4 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-blue-300/40 transition-all duration-200 hover:shadow-xl active:scale-[0.98]"
+                          className="flex-1 rounded-full bg-[var(--primary)] px-4 py-3 text-center text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:bg-[var(--primary-hover)] active:scale-[0.98]"
                         >
                           S'inscrire
                         </Link>

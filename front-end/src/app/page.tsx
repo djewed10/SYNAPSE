@@ -34,7 +34,7 @@ export default function Home() {
       
 
       <div className="container mx-auto px-4 min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-12 items-center">
+        <div className="w-full  grid lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Side - Hero Content */}
           <div className="space-y-8 text-center lg:text-left animate-in fade-in slide-in-from-left duration-700">

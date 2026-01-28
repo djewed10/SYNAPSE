@@ -9,6 +9,9 @@ const config: Config = {
   darkMode: "class", // Enable class-based dark mode
   theme: {
     extend: {
+      fontFamily: {
+        'product-sans': ['var(--font-product-sans)', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

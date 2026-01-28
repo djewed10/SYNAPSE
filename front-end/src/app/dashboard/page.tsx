@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { Play, RotateCw, Edit2 } from 'lucide-react';
 import { ProgressionChart } from '@/components/charts';
 
@@ -14,66 +15,66 @@ export default function DashboardHome() {
   ];
 
   return (
-    <div className="max-w-[1600px] mx-auto space-y-8 font-['Product_Sans'] text-(--text-primary)">
+    <div className="mx-auto space-y-8 font-['Product_Sans'] text-[var(--text-primary)] transition-colors duration-300">
       
       {/* Top ROW: Goal, Chart, Points, Ranking */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 dashboard-grid items-stretch">
         
         {/* Daily Goal */}
-        <div className="lg:col-span-4 rounded-3xl sm:mb-[-20px] p-6 relative overflow-hidden flex flex-col justify-center h-[130px] max-sm:h-[130px] mx-3 shadow-lg transition-all hover:shadow-xl"
+        <div className="lg:col-span-4 rounded-3xl lg:mt-[70px] p-6 relative overflow-hidden flex flex-col justify-center h-[130px] max-sm:h-[130px] mx-3 shadow-lg transition-all duration-300 hover:shadow-xl dashboard-cards-width"
           style={{
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.95) 100%)',
+            background: 'var(--daily-goal-bg)',
             backdropFilter: 'blur(20px)',
-            border: '1.5px solid rgba(59, 130, 246, 0.4)',
-            boxShadow: '0 20px 40px rgba(59, 130, 246, 0.2), 0 8px 16px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
+            border: '1.5px solid var(--daily-goal-border)',
+            boxShadow: 'var(--shadow-lg)'
           }}>
-          <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent pointer-events-none rounded-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-white/20 dark:from-white/5 to-transparent pointer-events-none rounded-3xl"></div>
           
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">
-          <img className='h-12 mt-[-14px] rotate-x-10 rotate-75' src="/6152022_general2_14-removebg-preview.png" alt="" />
-          <h2 className="text-xl max-sm:text-lg font-bold text-gray-800  mr-7">Objectif Quotidien</h2>
+                <img className='h-12 mt-[-14px] rotate-x-10 rotate-75' src="/3d-objective.png" alt="" />
+                <h2 className="text-lg max-sm:text-lg font-bold text-[var(--text-primary)] mr-7">Objectif Quotidien</h2>
               </div>
-              <div className="flex items-center gap-2 text-slate-700">
-          <span className="font-bold text-base text-blue-500 max-sm:text-sm">20/100</span>
-          <Edit2 className="w-4 h-4 cursor-pointer hover:text-blue-600 transition-colors" />
+              <div className="flex items-center gap-2 text-[var(--text-secondary)]">
+                <span className="font-bold text-base p-0 text-[var(--primary)] max-sm:text-sm">20/100</span>
+                <Edit2 className="w-4 h-4 cursor-pointer hover:text-[var(--primary-hover)] transition-colors" />
               </div>
             </div>
             
-            <div className="w-full bg-gradient-to-r from-slate-100 to-slate-50 rounded-full h-3 relative overflow-hidden shadow-lg">
+            <div className="w-full bg-[var(--surface)] rounded-full h-3 relative overflow-hidden" style={{ boxShadow: 'var(--shadow-sm)' }}>
               <div 
-          className="absolute left-0 top-0 bottom-0 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 shadow-xl" 
-          style={{ width: '20%', transition: 'width 0.5s ease-out' }}
+                className="absolute left-0 top-0 bottom-0 rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--accent-blue)]" 
+                style={{ width: '20%', transition: 'width 0.5s ease-out', boxShadow: '0 0 10px var(--primary)' }}
               ></div>
             </div>
           </div>
         </div>
 
         {/* Chart - shadcn/recharts */}
-        <div className="lg:col-span-4 bg-white rounded-3xl p-4 shadow-sm flex flex-col min-h-10">
-          <h3 className="text-sm font-semibold text-gray-700 mb-2 px-2">Progression</h3>
-          <div className="flex-1 w-full">
+        <div className="lg:col-span-4 bg-[var(--chart-bg)] mx-3 rounded-3xl p-4 shadow-sm flex flex-col min-h-10 dashboard-cards-width border border-[var(--border)] transition-colors duration-300" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <h3 className="text-sm font-semibold text-[var(--text-secondary)] mb-2 px-2">Progression</h3>
+          <div className="max-h-[250px] flex-1 w-full">
             <ProgressionChart />
           </div>
         </div>
 
         {/* Points & Ranking */}
-        <div className="lg:col-span-4 grid grid-cols-2 gap-8">
-           <div className="flex flex-col items-center justify-center">
-             <h3 className="text-xl font-bold mb-2">Points</h3>
+        <div className="lg:col-span-4 grid grid-cols-2 gap-8   dashboard-cards-width">
+           <div className="flex flex-col ml-3 items-center justify-center bg-[var(--surface)] rounded-2xl p-4 border border-[var(--border)] transition-colors duration-300" style={{ boxShadow: 'var(--shadow-card)' }}>
+             <h3 className="text-xl font-bold mb-2 text-[var(--text-primary)]">Points</h3>
              <div className="flex items-center gap-2">
-               <span className="text-5xl font-bold text-(--text-primary)">46</span>
+               <span className="text-5xl font-bold text-[var(--text-primary)]">46</span>
                <div className="w-12 h-12 relative">
                  <Image src="/icons/star.png" alt="Star" fill className="object-contain" />
                </div>
              </div>
            </div>
 
-           <div className="flex flex-col items-center justify-center border-l border-gray-200">
-             <h3 className="text-xl font-bold mb-2">Classement</h3>
+           <div className="flex flex-col mr-3 items-center justify-center bg-[var(--surface)] rounded-2xl p-4 border border-[var(--border)] transition-colors duration-300" style={{ boxShadow: 'var(--shadow-card)' }}>
+             <h3 className="text-xl font-bold mb-2 text-[var(--text-primary)]">Classement</h3>
              <div className="flex items-center gap-2">
-               <span className="text-5xl font-bold text-(--text-primary)">725</span>
+               <span className="text-5xl font-bold text-[var(--text-primary)]">725</span>
                <div className="w-12 h-12 relative">
                  <Image src="/icons/yellow_trophy_cup_winner_success_champion_icon_sign_or_symbol_3d_illustration.png" alt="Trophy" fill className="object-contain" />
                </div>
@@ -96,8 +97,7 @@ export default function DashboardHome() {
              bgColor="bg-[var(--card-modules-bg)]"
              titleColor="text-blue-600"
              iconPath="/images/modules.png"
-
-             iconIs3D={true}
+             href="/dashboard/modules"
            />
 
            {/* Examen */}
@@ -105,11 +105,13 @@ export default function DashboardHome() {
              title="Examen"
              subtitle="Le mode standard dont vous pouvez faire vos QCM"
              bgColor="bg-[var(--card-exam-bg)]"
-             titleColor="text-gray-900"
+             titleColor="text-[var(--text-primary)]"
              iconPath="/images/exam.png"
-             iconIs3D={true}
+             href="/dashboard/examen"
            />
+           {/* Dernierevu */}
            
+          
            {/* Hack */}
            <DashboardCard 
              title="Hack"
@@ -117,7 +119,7 @@ export default function DashboardHome() {
              bgColor="bg-[var(--card-hack-bg)]"
              titleColor="text-amber-500"
              iconPath="/images/hack.png"
-             iconIs3D={true} 
+             href="/dashboard/hack"
            />
            
            {/* Bibliotheque */}
@@ -127,7 +129,7 @@ export default function DashboardHome() {
              bgColor="bg-[var(--card-biblio-bg)]"
              titleColor="text-emerald-500"
              iconPath="/images/biblio.png"
-             iconIs3D={true}
+             href="/dashboard/bibliotheque"
            />
 
            {/* Résumé qcm */}
@@ -138,7 +140,7 @@ export default function DashboardHome() {
              bgColor="bg-[var(--card-resume-bg)]"
              titleColor="text-purple-600"
              iconPath="/images/resumer-qcm.png"
-             iconIs3D={true}
+             href="/dashboard/resume-qcm"
            />
 
            {/* Statistiques */}
@@ -148,28 +150,36 @@ export default function DashboardHome() {
              bgColor="bg-[var(--card-stats-bg)]"
              titleColor="text-sky-500"
              iconPath="/images/stats.png"
-             iconIs3D={true}
+             href="/dashboard/statistiques"
+           />
+            <DashboardCard 
+             title="Dernierevu"
+             subtitle="Le mode standard dont vous pouvez faire vos QCM"
+             bgColor="bg-[var(--card-derniervu-bg)]"
+             titleColor="text-[var(--text-primary)]"
+             iconPath="/images/eye.png"
+             href="/dashboard/dernierevu"
            />
         </div>
 
         {/* Right Sidebar: History */}
-        <div className="lg:col-span-4 bg-white rounded-3xl p-6 shadow-sm h-fit">
-           <h2 className="text-2xl font-bold mb-6">Historique</h2>
+        <div className="lg:col-span-4 mx-3 bg-[var(--history-bg)] rounded-3xl p-6 h-fit border border-[var(--border)] transition-colors duration-300" style={{ boxShadow: 'var(--shadow-card)' }}>
+           <h2 className="text-2xl font-bold mb-6 text-[var(--text-primary)]">Historique</h2>
            <div className="space-y-6">
              {historyItems.map((item, index) => (
                 <div key={index} className="space-y-2">
                    <div className="flex justify-between items-center">
                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-black"></div>
-                        <span className="font-semibold text-gray-800">{item.title}</span>
+                        <div className="w-3 h-3 rounded-full bg-[var(--history-dot)]"></div>
+                        <span className="font-semibold text-[var(--text-primary)]">{item.title}</span>
                      </div>
-                     <span className="font-bold text-gray-800">{item.progress}</span>
+                     <span className="font-bold text-[var(--text-primary)]">{item.progress}</span>
                    </div>
                    <div className="flex gap-2">
-                      <button className="flex-1 bg-(--primary-blue) text-white py-2 px-4 rounded-full flex items-center justify-center gap-2 text-sm font-medium hover:opacity-90 transition-opacity">
+                      <button className="flex-1 bg-[var(--primary)] text-white py-2 px-4 rounded-full flex items-center justify-center gap-2 text-sm font-medium hover:bg-[var(--primary-hover)] transition-all duration-300">
                          <Play className="w-4 h-4 fill-current" /> Continuer
                       </button>
-                      <button className="flex-1 bg-(--primary-blue) text-white py-2 px-4 rounded-full flex items-center justify-center gap-2 text-sm font-medium hover:opacity-90 transition-opacity">
+                      <button className="flex-1 bg-[var(--primary)] text-white py-2 px-4 rounded-full flex items-center justify-center gap-2 text-sm font-medium hover:bg-[var(--primary-hover)] transition-all duration-300">
                          <RotateCw className="w-4 h-4" /> Refaire
                       </button>
                    </div>
@@ -189,17 +199,20 @@ function DashboardCard({
   subtitle, 
   bgColor, 
   titleColor, 
-  iconPath
+  iconPath,
+  href
 }: { 
   title: string, 
   titleComponent?: React.ReactNode,
   subtitle: string, 
   bgColor: string, 
   titleColor: string, 
-  iconPath: string
+  iconPath: string,
+  href: string
 }) {
   return ( 
-     <div className={`${bgColor} rounded-3xl p-6 mx-4  relative overflow-hidden min-h-40 flex items-center justify-between transition-transform hover:scale-[1.02] cursor-pointer shadow-md`}>
+    <Link href={href} className="block">
+     <div className={`${bgColor} rounded-3xl p-6 mx-4 relative overflow-hidden min-h-40 flex items-center justify-between transition-all duration-300 hover:scale-[1.02] cursor-pointer border border-[var(--border)]`} style={{ boxShadow: 'var(--shadow-card)' }}>
       <div className="flex flex-col z-10 max-w-[60%]">
          <h3 className={`text-2xl font-bold mb-2 ${titleColor} flex items-center gap-2 font-['Product_Sans_Medium']`}>
              {title === 'Hack' && <img src="/icons/hack_icon.png" alt="Hack Icon" width={48} height={48} className="w-7 h-7" />}
@@ -208,9 +221,11 @@ function DashboardCard({
              {title === 'Examen' && <img src="/icons/chronometer-svgrepo-com.png" alt="Exam Icon" width={24} height={24} className="w-6 h-6 -mt-1" />}
              {title === 'Résumé qcm' && <img src="/icons/resumer-qcm-logo.png" alt="Resume Icon" width={24} height={24} className="w-6 h-6 mt-[-3px]" />}
              {title === 'Statistiques' && <img src="/icons/statistics-svgrepo-com.png" alt="Stats Icon" width={24} height={24} className="w-6 h-6 mt-[-3px]"  />}
+             {title === 'Dernierevu' && <img src="/icons/eye_icon.png" alt="Dernierevu Icon" width={24} height={24} className="w-6 h-6 mt-[-3px]" />}
+            
              {titleComponent || title}
          </h3>
-         <p className="text-sm text-gray-500 leading-tight font-['Product_Sans']">
+         <p className="text-sm text-[var(--text-secondary)] leading-tight font-['Product_Sans']">
            {subtitle}
          </p>
       </div>
@@ -225,5 +240,6 @@ function DashboardCard({
          />
       </div>
     </div>
+    </Link>
   );
 }

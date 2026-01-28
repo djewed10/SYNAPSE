@@ -1,86 +1,219 @@
 /* Globals CSS - Tailwind & Global Styles */
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Product Sans';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(https://design.penpot.app/assets/by-id/dc23a2d4-53d7-49aa-88e4-14cb2ccaf987) format('woff');
-}
+/* ===== FONTS - Loaded via next/font/local in layout.tsx ===== */
 
-@font-face {
-  font-family: 'Product Sans Medium';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(https://design.penpot.app/assets/by-id/456117e4-efc4-4d8e-ae4e-62b9fa8d7ee5) format('woff');
-}
-
-@font-face {
-  font-family: 'Product Sans';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(https://design.penpot.app/assets/by-id/456117e4-efc4-4d8e-ae4e-62b9fa8d7ee5) format('woff');
-}
-
-html, body {
+html,body{
   overflow-x: hidden;
-  max-width: 100vw;
+  max-width: 100%;
   margin: 0;
   padding: 0;
-}
-
-html {
-  overflow-y: scroll;
-}
-
-body {
+  overflow-y: auto;
   background-color: var(--background);
+  font-family: var(--font-product-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+/* ===== LIGHT MODE (Default) ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base Colors */
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --surface: #FFFFFF;
+  --surface-hover: #F1F5F9;
+  --surface-elevated: #FFFFFF;
+  
+  /* Text Colors */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --text-inverse: #FFFFFF;
+  
+  /* Border Colors */
+  --border: #E2E8F0;
+  --border-hover: #CBD5E1;
+  --border-focus: #4F46E5;
+  
+  /* Primary Brand - Indigo */
+  --primary: #4F46E5;
+  --primary-hover: #4338CA;
+  --primary-light: #EEF2FF;
+  --primary-blue: #4F46E5;
+  
+  /* Accent Colors */
+  --accent-blue: #3B82F6;
+  --accent-purple: #8B5CF6;
+  --accent-emerald: #10B981;
+  --accent-amber: #F59E0B;
+  --accent-rose: #F43F5E;
+  --accent-sky: #0EA5E9;
+  
+  /* Dashboard Card Backgrounds - Light */
+  --dashboard-bg: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --card-modules-bg: #EEF2FF;
+  --card-exam-bg: #F1F5F9;
+  --card-derniervu-bg: #b4ffaa;
+  --card-hack-bg: #FEF9C3;
+  --card-biblio-bg: #D1FAE5;
+  --card-resume-bg: #F3E8FF;
+  --card-stats-bg: #DBEAFE;
+  
+  /* Chart Colors */
+  --chart-bg: #FFFFFF;
+  --chart-grid: #E2E8F0;
+  --chart-line: #4F46E5;
+  
+  /* Daily Goal Card */
+  --daily-goal-bg: linear-gradient(135deg, rgba(238, 242, 255, 0.98) 0%, rgba(219, 234, 254, 0.95) 100%);
+  --daily-goal-border: rgba(79, 70, 229, 0.3);
+  
+  /* History Card */
+  --history-bg: #FFFFFF;
+  --history-dot: #0F172A;
+  
+  /* Scrollbar */
+  --scrollbar-track: #F1F5F9;
+  --scrollbar-thumb: #CBD5E1;
+  --scrollbar-thumb-hover: #94A3B8;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  
+  /* Module Performance Backgrounds */
+  --module-bg-excellent: #e6fff5;
+  --module-bg-medium: #fffceb;
+  --module-bg-bad: #ffebeb;
+  
+  /* Drawer */
   --drawer-translate-x: 0px;
   --drawer-progress: 0;
   --drawer-width: 288px;
+  --drawer-bg: #FFFFFF;
+  --drawer-border: #E2E8F0;
+}
 
-  /* Synapse Dashboard Colors */
-  --dashboard-bg: #ffffff;
-  --daily-goal-bg: #f5eae8;
-  --primary-blue: #4F46E5;
-  --card-modules-bg: #EEF2FF;
-  --card-hack-bg: #FEFCE8;
-  --card-resume-bg: #FAF5FF;
-  --card-biblio-bg: #ECFDF5;
-  --card-stats-bg: #EFF6FF;
-  --card-exam-bg: #F3F4F6;
-  --text-primary: #1F2937;
-  --text-secondary: #707070FF;
+/* ===== DARK MODE ===== */
+.dark {
+  /* Base Colors */
+  --background: #0B1120;
+  --foreground: #F1F5F9;
+  --surface: #151D2E;
+  --surface-hover: #1E293B;
+  --surface-elevated: #1A2332;
+  
+  /* Text Colors */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #0F172A;
+  
+  /* Border Colors */
+  --border: #1E293B;
+  --border-hover: #334155;
+  --border-focus: #6366F1;
+  
+  /* Primary Brand - Indigo (adjusted for dark) */
+  --primary: #6366F1;
+  --primary-hover: #818CF8;
+  --primary-light: rgba(99, 102, 241, 0.15);
+  --primary-blue: #6366F1;
+  
+  /* Dashboard Card Backgrounds - Dark */
+  --dashboard-bg: #0B1120;
+  --card-bg: #151D2E;
+  --card-modules-bg: rgba(99, 102, 241, 0.12);
+  --card-exam-bg: #5c5e5ca3;
+  --card-derniervu-bg: #1a471694;
+  --card-hack-bg: rgba(245, 158, 11, 0.12);
+  --card-biblio-bg: rgba(16, 185, 129, 0.12);
+  --card-resume-bg: rgba(139, 92, 246, 0.12);
+  --card-stats-bg: rgba(14, 165, 233, 0.12);
+  
+  /* Chart Colors */
+  --chart-bg: #151D2E;
+  --chart-grid: #1E293B;
+  --chart-line: #818CF8;
+  
+  /* Daily Goal Card */
+  --daily-goal-bg: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(59, 130, 246, 0.12) 100%);
+  --daily-goal-border: rgba(99, 102, 241, 0.4);
+  
+  /* History Card */
+  --history-bg: #151D2E;
+  --history-dot: #F1F5F9;
+  
+  /* Scrollbar */
+  --scrollbar-track: #151D2E;
+  --scrollbar-thumb: #334155;
+  --scrollbar-thumb-hover: #475569;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+  
+  /* Module Performance Backgrounds */
+  --module-bg-excellent: #03251198;
+  --module-bg-medium: #fdb82154;
+  --module-bg-bad: #cf6d6d91;
+  
+  /* Drawer */
+  --drawer-bg: #151D2E;
+  --drawer-border: #1E293B;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
 }
 
 /* Custom utility classes */
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .btn-primary {
-    @apply px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-all duration-300;
+    @apply px-4 py-2 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-all duration-300;
   }
 
   .btn-secondary {
-    @apply px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800 transition-all duration-300;
+    @apply px-4 py-2 bg-[var(--surface)] text-[var(--text-primary)] rounded-lg border border-[var(--border)] hover:bg-[var(--surface-hover)] transition-all duration-300;
   }
 
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 transition-colors duration-300;
+    @apply bg-[var(--card-bg)] rounded-2xl border border-[var(--border)] p-6 transition-all duration-300;
+    box-shadow: var(--shadow-card);
   }
 
   .input-field {
-    @apply w-full px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded border border-gray-300 dark:border-gray-600 focus:border-blue-500 outline-none transition-all duration-300;
+    @apply w-full px-4 py-2 bg-[var(--surface)] text-[var(--text-primary)] rounded-lg border border-[var(--border)] focus:border-[var(--border-focus)] outline-none transition-all duration-300;
+  }
+  
+  /* Dashboard specific cards */
+  .dashboard-card {
+    @apply rounded-3xl p-6 relative overflow-hidden transition-all duration-300;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+  }
+  
+  .dashboard-card:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-lg);
   }
 }
 
@@ -88,10 +221,7 @@ body {
 html {
   scroll-behavior: smooth;
 }
-.glow{
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-  animation: glow 2s infinite alternate;
-  }
+
 
 
 body {
@@ -203,4 +333,23 @@ body {
 .drawer-dragging .drawer-glow {
   transition: none !important;
 }
-
+@media (min-width: 1400px) {   
+.dashboard-grid {
+  gap: calc(var(--spacing) * 30); 
+}
+ }
+@media (min-width: 1800px) {   
+.dashboard-grid {
+  gap: calc(var(--spacing) * 40); 
+}
+ }
+@media (min-width: 2250px) {   
+.dashboard-grid {
+  gap: calc(var(--spacing) * 50); 
+}
+ }
+@media (max-width: 768px) and (min-width: 500px) {   
+.dashboard-cards-width {
+  width: 85vw;
+}
+ }

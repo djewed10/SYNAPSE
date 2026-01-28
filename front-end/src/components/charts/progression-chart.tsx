@@ -7,6 +7,7 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "./chart"
+import { useTheme } from "@/contexts/theme-context"
 
 const chartData = [
   { month: "Jan", questions: 186 },
@@ -20,11 +21,14 @@ const chartData = [
 const chartConfig = {
   questions: {
     label: "Questions",
-    color: "#3B82F6",
+    color: "var(--chart-line)",
   },
 } satisfies ChartConfig
 
 export function ProgressionChart() {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+  
   return (
     <ChartContainer config={chartConfig} className="h-full w-full min-h-[120px]">
       <AreaChart
@@ -37,19 +41,23 @@ export function ProgressionChart() {
           bottom: 0,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+        <CartesianGrid 
+          strokeDasharray="3 3" 
+          vertical={false} 
+          stroke={isDark ? "#1E293B" : "#e5e7eb"} 
+        />
         <XAxis
           dataKey="month"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
-          tick={{ fontSize: 11, fill: "#9ca3af" }}
+          tick={{ fontSize: 11, fill: isDark ? "#64748B" : "#9ca3af" }}
         />
         <YAxis
           tickLine={false}
           axisLine={false}
           tickMargin={8}
-          tick={{ fontSize: 11, fill: "#9ca3af" }}
+          tick={{ fontSize: 11, fill: isDark ? "#64748B" : "#9ca3af" }}
           width={40}
         />
         <ChartTooltip
@@ -58,27 +66,27 @@ export function ProgressionChart() {
         />
         <defs>
           <linearGradient id="fillQuestions" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.3} />
-            <stop offset="95%" stopColor="#3B82F6" stopOpacity={0.05} />
+            <stop offset="5%" stopColor={isDark ? "#818CF8" : "#3B82F6"} stopOpacity={isDark ? 0.4 : 0.3} />
+            <stop offset="95%" stopColor={isDark ? "#818CF8" : "#3B82F6"} stopOpacity={0.05} />
           </linearGradient>
         </defs>
         <Area
           dataKey="questions"
           type="monotone"
           fill="url(#fillQuestions)"
-          stroke="#3B82F6"
+          stroke={isDark ? "#818CF8" : "#3B82F6"}
           strokeWidth={2.5}
           dot={{
-            fill: "#3B82F6",
+            fill: isDark ? "#818CF8" : "#3B82F6",
             strokeWidth: 2,
             r: 4,
-            stroke: "#fff",
+            stroke: isDark ? "#151D2E" : "#fff",
           }}
           activeDot={{
             r: 6,
-            stroke: "#3B82F6",
+            stroke: isDark ? "#818CF8" : "#3B82F6",
             strokeWidth: 2,
-            fill: "#fff",
+            fill: isDark ? "#151D2E" : "#fff",
           }}
         />
       </AreaChart>

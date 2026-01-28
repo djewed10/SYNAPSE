@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
+import { productSans } from "@/lib/fonts";
 import "@/styles/globals.css";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
@@ -31,7 +32,7 @@ export default function RootLayout({
   children: ReactNode
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${productSans.variable}`} suppressHydrationWarning>
       <head>
         <script
           async
@@ -52,7 +53,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="transition-colors duration-300 bg-[var(--background)] dark:bg-gray-950 text-gray-900 dark:text-white">
+      <body className="transition-colors duration-300 bg-[var(--background)] text-[var(--foreground)]">
         <ThemeProvider>
           <LanguageProvider>
             <DrawerProvider>
